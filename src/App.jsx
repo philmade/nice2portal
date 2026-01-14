@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  Users, 
-  FileText, 
-  ShieldAlert, 
-  ShieldCheck, 
-  Activity, 
+import {
+  Users,
+  FileText,
+  ShieldAlert,
+  ShieldCheck,
+  Activity,
   Database,
   ExternalLink,
   Menu,
@@ -13,8 +13,10 @@ import {
   Bell,
   ChevronRight,
   ArrowRight,
-  CheckCircle // Added missing import
+  CheckCircle,
+  Home
 } from 'lucide-react';
+import LandingPage from './LandingPage';
 
 // --- Data Structure ---
 
@@ -332,18 +334,27 @@ const VerdictBadge = ({ status }) => {
 const App = () => {
   const [activeTab, setActiveTab] = useState('t2d');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+  const [showLanding, setShowLanding] = useState(true);
+
   const data = database[activeTab];
+
+  if (showLanding) {
+    return <LandingPage onEnterApp={() => setShowLanding(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col md:flex-row selection:bg-blue-100">
-      
+
       {/* Sidebar */}
       <aside className={`fixed inset-0 z-20 bg-slate-900 md:static md:w-60 md:shrink-0 transform ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-200 border-r border-slate-800 flex flex-col`}>
         <div className="p-6 flex items-center gap-2.5 border-b border-slate-800/50">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+          <button
+            onClick={() => setShowLanding(true)}
+            className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+            title="Back to Home"
+          >
              <Activity className="w-5 h-5 text-white" />
-          </div>
+          </button>
           <div>
             <span className="font-bold text-lg text-white tracking-tight block leading-none">NICE 2.0</span>
             <span className="text-[10px] text-blue-400 font-medium tracking-widest uppercase">Open Regulator</span>
